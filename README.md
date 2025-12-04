@@ -1,4 +1,4 @@
-# wRapped <img src="man/figures/logo.png" align="right" height="139" alt="" />
+# wRapped <img src="man/figures/logo.png" align="right" height="250" alt="" />
 
 ## Install Package
 
