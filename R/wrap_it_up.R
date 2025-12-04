@@ -1,10 +1,20 @@
+#' Wrap your most used R packages in a given year
+#'
+#' This function scours all R scripts in a named path (.Rmd, .qmd, .R, etc.) 
+#' to determine your most-used packages for a specified year. Top packages
+#' and top functions are printed and a plot showing your top packages is 
+#' generated. 
+#' @param path path where your scripts can be found
+#' @param year year you want to wrap
+#' @return top 5 functions and packages plus plot 
+#' @export
 wrap_it_up <- function(path, year = 2025) {
   
   # ----- load required packages ----- #
   # required packages
   required_packages <- c(
     "grid", "fs", "stringr", "purrr", "ggimage", "ggtext",
-    "RCurl", "magick", "tidyverse")
+    "RCurl", "magick", "sysfonts", "showtext", "here", "tidyverse")
   
   # install any missing packages
   missing_packages <- required_packages[!(required_packages %in% 
@@ -14,6 +24,10 @@ wrap_it_up <- function(path, year = 2025) {
   # load with suppressed start up messages
   suppressPackageStartupMessages({
     lapply(required_packages, library, character.only = TRUE)})
+  
+  # add fonts
+  sysfonts::font_add_google(name = "Fredoka", family = "fredoka")
+  showtext::showtext_auto()
   
   # ----- file search ----- #
   message("🔍 Searching for files...")
@@ -68,7 +82,6 @@ wrap_it_up <- function(path, year = 2025) {
   message("🖼 Gathering package hexagon stickers...")
   
   # define default image
-  #default_hex <- "https://raw.githubusercontent.com/rstudio/hex-stickers/main/PNG/tidyverse.png"
   default_hex <- "https://www.r-project.org/logo/Rlogo.png"
   
   # add hex url to top_packages
@@ -87,12 +100,11 @@ wrap_it_up <- function(path, year = 2025) {
   
   # create custom y axis image + text vector
   axis_label_vec <- sprintf(
-    "<img src='%s' width='50'/>",
+    "<img src='%s' width='45'/>",
     top_packages$valid_hex_url)
   
   # wrapped label
-  img_path <- system.file("extdata", "wRapped.jpg", package = "myPackage")
-  wrapped_label_vec <- sprintf("<img src='%s' width='20'/>", img_path)
+  wrapped_label_vec <- "<img src='https://raw.githubusercontent.com/hschmidt12/wRapped/main/wRapped.png' width='20'/>"
 
   # name vector by package to match labels to levels
   names(axis_label_vec) <- top_packages$package
@@ -102,28 +114,31 @@ wrap_it_up <- function(path, year = 2025) {
   
   # plot
   top_packages_plot <- ggplot(top_packages, aes(x = n, y = reorder(package, n))) +
-    geom_col() +
+    geom_col(fill = "#4281A4") +
     geom_text(aes(label = package),
-              hjust = 1.05, fontface = "bold",
-              color = "white",
-              size = 4) +
+              hjust = 1.05, 
+              color = "white", family = "fredoka",
+              size = 15) +
     theme_minimal() +
-    labs(caption = paste0("\n", "Made with ", wrapped_label_vec, "                                                ", year, " Recap", sep = "")) +
-    ggtitle("My Top R Packages\n") +
+    labs(title = "My Top R Packages",
+         subtitle = paste(year, " Recap", sep = ""),
+         caption = paste0("\n", wrapped_label_vec, sep = "")) +
     scale_y_discrete(labels = axis_label_vec) +
     theme(
       axis.text.y = element_markdown(),
       axis.title.y = element_blank(),
+      axis.text.x = element_text(size = 20, family = "fredoka"),
       axis.title.x = element_blank(),
       axis.ticks.y = element_blank(),
       plot.caption = element_markdown(),
-      plot.title = element_text(hjust = 0.3),
-      plot.background = element_rect(color = "white", fill = "white"),
+      plot.title = element_text(hjust = 0.3, size = 60, family = "fredoka"),
+      plot.subtitle = element_text(hjust = 0.38, size = 50, family = "fredoka"),
+      plot.background = element_rect(color = "#8DCECC", fill = "#8DCECC"),
       plot.margin = unit(c(1,1,1,1),"cm")) 
   
   # save
   ggsave(top_packages_plot, 
-         filename = paste(year, "_packages_wrapped.png", sep = ""),
+         filename = here(paste(year, "_packages_wrapped.png", sep = "")),
          dpi = 300,
          width = 5,
          height = 6)
