@@ -1,6 +1,7 @@
-# wRapped <img align="right" src="man/figures/logo.png" width=300>
+# wRapped <img align="right" src="man/figures/wRapped.png" width=250>
+Create an end-of-year ranking of your most used R packages and functions, plus generate a Spotify-wrapped style plot!
 
-Reach out to me with any requests, questions, comments, or concerns!
+Reach out to me with any requests, questions, comments, or concerns:
 
 [Website](https://hschmidt12.github.io/) <br />
 [BlueSky](https://bsky.app/profile/helen-schmidt.bsky.social) <br />
