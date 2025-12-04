@@ -1,5 +1,12 @@
 # wRapped <img src="man/figures/logo.png" align="right" height="250" alt="" />
 
+Reach out to me with any requests, questions, comments, or concerns!
+
+[Website](https://hschmidt12.github.io/) <br />
+[BlueSky](https://bsky.app/profile/helen-schmidt.bsky.social) <br />
+[LinkedIn](https://www.linkedin.com/in/helenschmidt1/) <br />
+Email: helen_schmidt@temple.edu
+
 ## Install Package
 
 ```r
