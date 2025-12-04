@@ -1,4 +1,4 @@
-# wRapped <img src="man/figures/logo.png" align="right" height="250" alt="" />
+# wRapped <img align="right" src="man/figures/logo.png" width = 200 height="250" alt="" />
 
 Reach out to me with any requests, questions, comments, or concerns!
 
